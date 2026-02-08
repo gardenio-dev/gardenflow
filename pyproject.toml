@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gardenflow"
+version = "0.1.0"
+description = "An Apache Airflow provider for GardenIO."
+readme = "README.md"
+license = { text = "Apache License 2.0" }
+requires-python = ">=3.11"
+classifiers = [
+    "Framework :: Apache Airflow",
+    "Framework :: Apache Airflow :: Provider",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "apache-airflow>=3.0",
+    "apache-airflow-providers-celery",
+    "apache-airflow-providers-postgres",
+    "pandas",
+]
+
+[project.scripts]
+gardenflow = "gardenflow.cli.main:main"
+
+[project.entry-points.apache_airflow_provider]
+provider_info = "gardenflow.__init__:get_provider_info"
+
+[project.urls]
+Homepage = "https://github.com/gardenio-dev/gardenflow"
+Source = "https://github.com/gardenio-dev/gardenflow"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gardenflow"]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4",
+]

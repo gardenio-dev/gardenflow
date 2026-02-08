@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "github.copilot",
+    "github.copilot-chat",
+    "ms-python.python",
+    "ms-azuretools.vscode-docker",
+    "oderwat.indent-rainbow",
+    "humao.rest-client",
+    "usernamehm.error-lens"
+  ]
+}

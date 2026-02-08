@@ -1,0 +1,38 @@
+set shell := ["bash", "-uc"]
+set dotenv-load
+
+project := `cd ../..; basename ${PWD}`
+
+# Build the image.
+build:
+    #!/usr/bin/env bash
+    set -aeo pipefail
+    source .env
+    python=$(cat ../../.python-version)
+    hash=$(git rev-parse --short HEAD)
+    REPO=${REPO:="gardenio"}
+    echo "project: {{ project }}"
+    echo "image:   ${IMAGE}"
+    echo "python:  ${python}"
+    echo "hash:    ${hash}"
+    echo "repo:    ${REPO}"
+    docker build \
+        -t ${IMAGE} \
+        --build-arg PROJECT={{ project }} \
+        --build-arg UBUNTU="${UBUNTU}" \
+        --build-arg PYTHON="${python}" \
+        --progress=${PROGRESS:-plain} \
+        ${DOCKER_BUILD_ARGS:-} \
+        .
+    docker tag ${IMAGE} "${IMAGE}:latest"
+    docker tag ${IMAGE} "${REPO}/${IMAGE}:latest"
+
+# Run docker-compose to bring up the container.
+up:
+    #!/usr/bin/env bash
+    set -aeo pipefail
+    source .env
+    export REPO=${REPO:="gardenio"}
+    PROJECT={{ project }}
+    group=${COMPOSE_PROJECT_NAME:={{ project }}}-dev
+    docker compose -p "${group}" up -d

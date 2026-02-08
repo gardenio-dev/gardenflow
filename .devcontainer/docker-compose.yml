@@ -1,0 +1,52 @@
+name: gardenflow-dev
+services:
+  gardenflow-dev-vscode:
+    platform: linux/amd64
+    privileged: true
+    container_name: gardenflow-dev-vscode
+    build:
+      context: ../docker/dev
+      dockerfile: Dockerfile
+      args:
+        - UBUNTU=24.04
+        - PYTHON=3.11.3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ..:/workspace:cached
+    networks:
+      - gardenflow-dev-stack
+    command: sleep infinity
+
+  gardenflow-dev-postgis:
+    image: postgis/postgis:17-3.5
+    container_name: gardenflow-dev-postgis
+    platform: linux/amd64
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "54321:5432"
+    networks:
+      gardenflow-dev-stack:
+        aliases:
+          - postgis
+    volumes:
+      - gardenflow-dev-postgis-data:/var/lib/postgresql/data
+
+  gardenflow-dev-redis:
+    image: redis:7
+    container_name: gardenflow-dev-redis
+    ports:
+      - "6379:6379"
+    networks:
+      gardenflow-dev-stack:
+        aliases:
+          - redis
+
+volumes:
+  gardenflow-dev-postgis-data:
+
+networks:
+  gardenflow-dev-stack:
+    name: gardenflow-dev-stack

@@ -1,0 +1,125 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Gardenflow",
+      "dependsOn": [
+        "Airflow: Scheduler",
+        "Airflow: Triggerer",
+        "Airflow: Celery Worker",
+        "Airflow: DAG Processor",
+        "Airflow: API Server"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Airflow: API Server",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; uv run gardenflow -c api-server"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Airflow: Standalone",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; uv run gardenflow -c standalone"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Airflow: Scheduler",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; uv run gardenflow -c scheduler"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Airflow: DAG Processor",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; uv run gardenflow -c dag-processor"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Airflow: Triggerer",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; uv run gardenflow -c triggerer"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "label": "Airflow: Celery Worker",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env; set +a; gardenflow -c '\"celery worker\"'"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    }
+  ]
+}
