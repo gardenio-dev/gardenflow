@@ -109,7 +109,7 @@
       "command": "bash",
       "args": [
         "-c",
-        "set -a; source .env; set +a; gardenflow -c '\"celery worker\"'"
+        "set -a; source .env; set +a; uv run gardenflow -c \"celery worker\""
       ],
       "problemMatcher": [],
       "presentation": {
