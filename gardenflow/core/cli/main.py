@@ -21,16 +21,11 @@ from dotenv import load_dotenv
     ),
 )
 def main(component: str):
-    """Run the specified Airflow component using the Airflow CLI.
-
-    :param component: The Airflow component to run. Must be one of 'api-
-        server', 'standalone', 'scheduler', or 'dag-processor'.
-
-    """
+    """Run an Airflow component."""
     load_dotenv(override=True)
     from airflow.__main__ import main
 
-    args = ["airflow", component]
+    args = ["airflow"] + component.split(" ")
     sys.argv.clear()
     sys.argv.extend(args)
     sys.exit(main())

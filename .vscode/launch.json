@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Airflow: API Server",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "api-server"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Airflow: Standalone",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "standalone"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Airflow: Scheduler",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "scheduler"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Airflow: DAG Processor",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "dag-processor"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Airflow: Triggerer",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "triggerer"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Airflow: Celery Worker",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "gardenflow.core.cli.main",
+      "args": ["-c", "celery worker"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    }
+  ]
+}

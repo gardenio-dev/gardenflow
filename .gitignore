@@ -24,6 +24,7 @@ htmlcov/
 
 # IDE
 .idea/
+.claude/
 *.swp
 *.swo
 
@@ -38,9 +39,15 @@ Thumbs.db
 # Temporary data
 temp/
 
+# Compiled binaries
+bin/
+
 # Airflow (local runs)
 .airflow/
 airflow.cfg
 airflow.db
 airflow-webserver.pid
 logs/
+
+# GardenIO
+.gardenio/
