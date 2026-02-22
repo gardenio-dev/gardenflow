@@ -15,6 +15,7 @@ services:
       - ..:/workspace:cached
     networks:
       - gardenflow-dev-stack
+      - gardenio-dev-stack
     command: sleep infinity
 
   gardenflow-dev-postgis:
@@ -50,3 +51,5 @@ volumes:
 networks:
   gardenflow-dev-stack:
     name: gardenflow-dev-stack
+  gardenio-dev-stack:
+    external: true
