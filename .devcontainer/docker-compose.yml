@@ -13,6 +13,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ..:/workspace:cached
+      - gardenio-home:/workspace/.gardenio
     networks:
       - gardenflow-dev-stack
       - gardenio-dev-stack
@@ -47,6 +48,8 @@ services:
 
 volumes:
   gardenflow-dev-postgis-data:
+  gardenio-home:
+    external: true
 
 networks:
   gardenflow-dev-stack:
