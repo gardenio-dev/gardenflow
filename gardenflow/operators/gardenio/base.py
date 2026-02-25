@@ -13,11 +13,18 @@ class GardenioOperator(BaseOperator):
     connected :class:`GardenIOClient` to subclasses.
     """
 
+    def get_tenant(self, context) -> str:
+        """Get the tenant ID from the GardenIO context parameter.
+
+        :param context: Airflow task context
+        :returns: the tenant identifier
+        """
+        return context["params"]["gardenio"]["tenant"]
+
     def get_client(self, context) -> GardenIOClient:
         """Get a GardenIO client for the current tenant.
 
         :param context: Airflow task context
         :returns: a connected GardenIOClient
         """
-        tenant = context["params"]["gardenio"]["tenant"]
-        return GardenIOClient.connect(tenant=tenant)
+        return GardenIOClient.connect(tenant=self.get_tenant(context))
