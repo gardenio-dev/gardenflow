@@ -125,7 +125,7 @@ with GardenDAG(
             minimum=0,
         ),
         "fitgeom": Param(
-            default=False,
+            default=True,
             type="boolean",
             description="Fit geometry type after loading",
         ),
