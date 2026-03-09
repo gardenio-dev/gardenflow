@@ -27,6 +27,7 @@ default_args = {
 with GardenDAG(
     dag_id="reproject_collection",
     dag_display_name="Reproject Collection",
+    categories=["Features"],
     default_args=default_args,
     description=(
         "Reproject a feature collection to a new coordinate "

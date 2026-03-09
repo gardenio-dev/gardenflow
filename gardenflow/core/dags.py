@@ -18,8 +18,19 @@ def gardenio_param() -> Param:
     return Param(
         default={"tenant": "", "user": ""},
         type="object",
-        description=("GardenIO execution context (injected automatically)"),
+        description=(
+            "GardenIO execution context (injected automatically)"
+        ),
     )
+
+
+def category_tag(path: str) -> str:
+    """Build a category tag from a path.
+
+    :param path: category path (e.g. ``"features/collections"``)
+    :returns: prefixed tag (e.g. ``"category:features/collections"``)
+    """
+    return f"category:{path}"
 
 
 def GardenDAG(*args, **kwargs) -> DAG:
@@ -29,12 +40,18 @@ def GardenDAG(*args, **kwargs) -> DAG:
     ``gardenio`` Param is declared, then delegates to
     :class:`airflow.DAG`.
 
+    An optional ``categories`` kwarg accepts a string or list
+    of strings representing hierarchical category paths.  Each
+    path is converted to a ``category:<path>`` tag so that
+    GardenIO can organise processes into a tree.
+
     Usage::
 
         from gardenflow.core.dags import GardenDAG
 
         with GardenDAG(
             dag_id="my_process",
+            categories=["features/collections"],
             schedule=None,
             start_date=datetime(2024, 1, 1),
             catchup=False,
@@ -42,9 +59,20 @@ def GardenDAG(*args, **kwargs) -> DAG:
         ) as dag:
             ...
     """
+    categories = kwargs.pop("categories", None)
+
     tags = list(kwargs.get("tags") or [])
     if gardenio_tag() not in tags:
         tags.append(gardenio_tag())
+
+    if categories:
+        if isinstance(categories, str):
+            categories = [categories]
+        for cat in categories:
+            tag = category_tag(cat)
+            if tag not in tags:
+                tags.append(tag)
+
     kwargs["tags"] = tags
 
     params = dict(kwargs.get("params") or {})

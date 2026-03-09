@@ -26,6 +26,7 @@ default_args = {
 with GardenDAG(
     dag_id="load_ogr",
     dag_display_name="Load OGR Data",
+    categories=["Features"],
     default_args=default_args,
     description="Load a geospatial data file into PostGIS",
     schedule=None,
