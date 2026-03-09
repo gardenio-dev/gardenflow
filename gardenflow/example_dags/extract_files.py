@@ -24,6 +24,7 @@ default_args = {
 with GardenDAG(
     dag_id="extract_files",
     dag_display_name="Extract Files",
+    categories=["Files"],
     default_args=default_args,
     description="Extract a .zip archive within the tenant's home directory",
     schedule=None,
