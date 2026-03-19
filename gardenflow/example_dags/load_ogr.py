@@ -37,7 +37,7 @@ with GardenDAG(
             type="string",
             description="Source file path (relative to tenant home)",
             minLength=1,
-            format="file-path",
+            format="any-path",
         ),
         "schema": Param(
             default="public",
@@ -70,7 +70,7 @@ with GardenDAG(
             description="Assign output SRS (no reprojection)",
         ),
         "t_srs": Param(
-            default="EPSG:4326",
+            default="EPSG:3857",
             type="string",
             description="Target SRS (reprojects)",
         ),
