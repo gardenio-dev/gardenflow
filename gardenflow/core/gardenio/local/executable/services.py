@@ -91,3 +91,21 @@ class LocalExecutableGardenIOClient(GardenIOClient):
             self._settings.executable,
         )
         yield from executor.run(*args)
+
+    def reproject(
+        self,
+        collection: str,
+        srid: int,
+    ) -> Generator[str, None, None]:
+        """Reproject a feature collection to a new SRID."""
+        args = [
+            "features",
+            "collections",
+            "reproject",
+            "--srid",
+            str(srid),
+            self.tenant,
+            collection,
+        ]
+        executor = StreamingExecutor(self._settings.executable)
+        yield from executor.run(*args)

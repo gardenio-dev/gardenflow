@@ -65,6 +65,23 @@ class GardenIOClient(TenantService, ABC):
         :yields: lines from the command output
         """
 
+    @abstractmethod
+    def reproject(
+        self,
+        collection: str,
+        srid: int,
+    ) -> Generator[str, None, None]:
+        """Reproject a feature collection to a new SRID.
+
+        Transforms all geometries in the collection to a new
+        coordinate reference system, rebuilds spatial indexes,
+        and invalidates tile caches.
+
+        :param collection: collection name
+        :param srid: target SRID (e.g. 3857, 4326)
+        :yields: lines from the command output
+        """
+
     @classmethod
     @lru_cache()
     @configured()

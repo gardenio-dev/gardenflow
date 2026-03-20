@@ -7,7 +7,7 @@ from the tenant's home directory into a PostGIS schema.
 
 from datetime import datetime, timedelta
 
-from airflow.models.param import Param
+from airflow.sdk import Param
 
 from gardenflow.core.dags import GardenDAG
 from gardenflow.operators.gardenio.ogr2ogr import (
@@ -24,8 +24,9 @@ default_args = {
 }
 
 with GardenDAG(
-    dag_id="ogr2ogr_load",
-    dag_display_name="ogr2ogr Load",
+    dag_id="load_ogr",
+    dag_display_name="Load OGR Data",
+    categories=["Features"],
     default_args=default_args,
     description="Load a geospatial data file into PostGIS",
     schedule=None,
@@ -33,10 +34,10 @@ with GardenDAG(
     catchup=False,
     params={
         "path": Param(
-            default="",
             type="string",
             description="Source file path (relative to tenant home)",
             minLength=1,
+            format="any-path",
         ),
         "schema": Param(
             default="public",
@@ -69,7 +70,7 @@ with GardenDAG(
             description="Assign output SRS (no reprojection)",
         ),
         "t_srs": Param(
-            default="EPSG:4326",
+            default="EPSG:3857",
             type="string",
             description="Target SRS (reprojects)",
         ),
@@ -125,12 +126,12 @@ with GardenDAG(
             minimum=0,
         ),
         "fitgeom": Param(
-            default=False,
+            default=True,
             type="boolean",
             description="Fit geometry type after loading",
         ),
         "bless": Param(
-            default=False,
+            default=True,
             type="boolean",
             description="Bless loaded tables as feature collections",
         ),
